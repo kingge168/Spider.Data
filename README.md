@@ -1,7 +1,7 @@
 Spider.Data
 ==============
 
-##A very easy and fast ORM framework.
+##It's a very easy and fast ORM framework.
 
 SmartObject
 ------------
