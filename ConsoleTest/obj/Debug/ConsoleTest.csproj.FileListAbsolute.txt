@@ -1,9 +1,0 @@
-D:\Download\Spider.Data\ConsoleTest\bin\Debug\ConsoleTest.exe.config
-D:\Download\Spider.Data\ConsoleTest\bin\Debug\ConsoleTest.exe
-D:\Download\Spider.Data\ConsoleTest\bin\Debug\ConsoleTest.pdb
-D:\Download\Spider.Data\ConsoleTest\bin\Debug\Spider.Data.dll
-D:\Download\Spider.Data\ConsoleTest\bin\Debug\Spider.Data.pdb
-D:\Download\Spider.Data\ConsoleTest\obj\Debug\ConsoleTest.csprojResolveAssemblyReference.cache
-D:\Download\Spider.Data\ConsoleTest\obj\Debug\ConsoleTest.exe
-D:\Download\Spider.Data\ConsoleTest\obj\Debug\ConsoleTest.pdb
-D:\Download\Spider.Data\ConsoleTest\bin\Debug\MySql.Data.dll
