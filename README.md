@@ -29,7 +29,7 @@ ORM
     DataWrapper wrapper2 = new DataWrapper();
     wrapper2.CommandText = "delete from User where ID=@ID;";
     wrapper2.ParameterProvider = d => { return new List<KeyValuePair<string, object>>() {  new KeyValuePair<string, object>("ID", 1) }; };
-helper.ProcessData(new List<DataWrapper>() { wrapper,wrapper2});
+    helper.ProcessData(new List<DataWrapper>() { wrapper,wrapper2});
 
 App.Config
 -------------
@@ -47,4 +47,4 @@ App.Config
     <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" />
     </startup>
-  </configuration>
+    </configuration>
