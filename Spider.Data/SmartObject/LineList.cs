@@ -92,19 +92,30 @@ namespace Spider.Data
                 int count = 0;
                 bool success = false;
                 Node<T> node = Head;
+                if(Head == null)
+                {
+                   Add(item);
+                   success = true;
+                }
+                else{
                 while (node != null)
                 {
                     if (index == count)
                     {
-                        Node<T> ItemNode = new Node<T>(item);
-                        ItemNode.Next = node.Next;
-                        node.Next = ItemNode;
+                        Node<T> itemNode = new Node<T>(item);
+                        itemNode.Next = node;
+                        node = itemNode;
+                        if(index == 0)
+                        {
+                           Head=itemNode;
+                        }
                         Count++;
                         success = true;
                         break;
                     }
                     node = node.Next;
                     count++;
+                }
                 }
                 if (!success)
                 {
