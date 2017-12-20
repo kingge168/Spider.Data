@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 namespace Spider.Data
@@ -23,17 +23,22 @@ namespace Spider.Data
             }
             public D Data { set; get; }
             public Node<D> Next { set; get; }
-        }
-        private Node<T> _head;
+        }        
         private int _count;
+        private Node<T> _head;
         private Node<T> Head
         {
             get { return _head; }
             set { _head = value; }
         }
+        private Node<T> _current;
+        private Node<T> Current
+        {
+            get { return _current; }
+            set { _current = value; }
+        }
         public LineList()
         {
-            Head = new Node<T>();
             Count = 0;
         }
         public LineList(IEnumerable<T> nodes)
@@ -51,7 +56,7 @@ namespace Spider.Data
         {
             int index = -1;
             bool flag = false;
-            Node<T> node = Head.Next;
+            Node<T> node = Head;
             while (node != null)
             {
                 index++;
@@ -87,7 +92,7 @@ namespace Spider.Data
                 int count = 0;
                 bool success = false;
                 Node<T> node = Head;
-                while (node.Next != null)
+                while (node != null)
                 {
                     if (index == count)
                     {
@@ -119,15 +124,27 @@ namespace Spider.Data
                 int count = 0;
                 bool success = false;
                 Node<T> node = Head;
-                while (node.Next != null)
+                while (node != null)
                 {
                     if (index == count)
-                    {
-                        node.Next = node.Next.Next;
+                    { 
+                        if(node.Next!=null)
+                        {           
+                            node.Next = node.Next.Next;
+                        }
+                        else
+                        {
+                            node.Next=null;
+                        }
+                        Count--;
                         success = true;
                         break;
                     }
                     node = node.Next;
+                    if(index == 0)
+                    {
+                        Head=node;
+                    }
                     count++;
                 }
                 if (!success)
@@ -145,7 +162,7 @@ namespace Spider.Data
                 {
                     throw new IndexOutOfRangeException();
                 }
-                Node<T> node = Head.Next;
+                Node<T> node = Head;
                 int count = 0;
                 while (node != null)
                 {
@@ -164,7 +181,7 @@ namespace Spider.Data
                 {
                     throw new IndexOutOfRangeException();
                 }
-                Node<T> node = Head.Next;
+                Node<T> node = Head;
                 bool flag = false;
                 int count = 0;
                 while (node != null)
@@ -193,13 +210,17 @@ namespace Spider.Data
             }
             else
             {
-                Node<T> node = Head;
-                while (node.Next != null)
+                Node<T> node = Current;
+                if (Current == null)
                 {
-                    node = node.Next;
+                    Head = new Node<T>(item);
+                    Current = Head;
                 }
-                Node<T> last = new Node<T>(item);
-                node.Next = last;
+                else
+                {
+                    Current.Next = new Node<T>(item);
+                    Current = Current.Next;
+                }
                 Count++;
             }
         }
@@ -212,14 +233,22 @@ namespace Spider.Data
             }
             else
             {
-                Head.Next = null;
+                Node<T> node = Head;
+                while (node != null)
+                {
+                    var temp=node;                    
+                    node = node.Next;
+                    temp.Next=null;
+                }
+                Head = null;
+                Current = null;
                 Count = 0;
             }
         }
 
         public bool Contains(T item)
         {
-            Node<T> node = Head.Next;
+            Node<T> node = Head;
             while (node != null)
             {
                 if (node.Data.Equals(item))
@@ -247,10 +276,10 @@ namespace Spider.Data
             T[] array = new T[Count];
             Node<T> node = Head;
             int i = 0;
-            while (node.Next != null)
+            while (node != null)
             {
-                node = node.Next;
                 array[i] = node.Data;
+                node = node.Next;                
                 i++;
             }
             return array;
@@ -276,11 +305,11 @@ namespace Spider.Data
         public bool Remove(T item)
         {
             Node<T> node = Head;
-            while (node.Next != null)
+            while (node != null)
             {
-                if (node.Next.Data.Equals(item))
+                if (node.Data.Equals(item))
                 {
-                    node.Next = node.Next.Next;
+                    node.Next = node.Next == null?null : node.Next.Next;
                     Count--;
                     return true;
                 }
@@ -292,20 +321,22 @@ namespace Spider.Data
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> node = Head;
-            while (node.Next != null)
+            while (node != null)
             {
+                var data = node.Data;
                 node = node.Next;
-                yield return node.Data;
+                yield return data;
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             Node<T> node = Head;
-            while (node.Next != null)
+            while (node != null)
             {
+                var data = node.Data;
                 node = node.Next;
-                yield return node.Data;
+                yield return data;
             }
         }
     }
