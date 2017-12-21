@@ -240,7 +240,7 @@
                         {
                             case TypeCode.Empty:
                             case TypeCode.DBNull:
-                            case (TypeCode.DateTime | TypeCode.Object):
+                                this._value = null;
                                 return;
 
                             case TypeCode.Object:
