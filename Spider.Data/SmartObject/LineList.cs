@@ -92,12 +92,7 @@ namespace Spider.Data
                 int count = 0;
                 bool success = false;
                 Node<T> node = Head;
-                if(Head == null)
-                {
-                   Add(item);
-                   success = true;
-                }
-                else{
+                Node<T> last = null;
                 while (node != null)
                 {
                     if (index == count)
@@ -113,9 +108,9 @@ namespace Spider.Data
                         success = true;
                         break;
                     }
+                    last = node;
                     node = node.Next;
                     count++;
-                }
                 }
                 if (!success)
                 {
@@ -135,27 +130,25 @@ namespace Spider.Data
                 int count = 0;
                 bool success = false;
                 Node<T> node = Head;
+                Node<T> last = null;
                 while (node != null)
                 {
                     if (index == count)
                     { 
-                        if(node.Next!=null)
+                        if(last!=null)
                         {           
-                            node.Next = node.Next.Next;
+                            last.Next = node.Next;
                         }
                         else
                         {
-                            node.Next=null;
+                            Head = node.Next;
                         }
                         Count--;
                         success = true;
                         break;
                     }
+                    last = node;
                     node = node.Next;
-                    if(index == 0)
-                    {
-                        Head=node;
-                    }
                     count++;
                 }
                 if (!success)
@@ -316,11 +309,20 @@ namespace Spider.Data
         public bool Remove(T item)
         {
             Node<T> node = Head;
+            Node<T> last = null;
             while (node != null)
             {
                 if (node.Data.Equals(item))
                 {
-                    node.Next = node.Next == null?null : node.Next.Next;
+                    if(last != null)
+                    {
+                        last.Next = node.Next;
+                    }
+                    else
+                    {
+                        Head = node.Next;
+                        Current = Head;
+                    }
                     Count--;
                     return true;
                 }
