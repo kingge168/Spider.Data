@@ -93,16 +93,24 @@ namespace Spider.Data
                 bool success = false;
                 Node<T> node = Head;
                 Node<T> last = null;
+                if(node == null)
+                {
+                    Add(item);
+                    success = true;
+                }
                 while (node != null)
                 {
                     if (index == count)
                     {
                         Node<T> itemNode = new Node<T>(item);
                         itemNode.Next = node;
-                        node = itemNode;
-                        if(index == 0)
+                        if(last != null)
                         {
-                           Head=itemNode;
+                            last.Next = itemNode;
+                        }
+                        else
+                        {
+                            Head=itemNode;
                         }
                         Count++;
                         success = true;
@@ -138,10 +146,12 @@ namespace Spider.Data
                         if(last!=null)
                         {           
                             last.Next = node.Next;
+                            Current = last.Next==null?last:Current;
                         }
                         else
                         {
                             Head = node.Next;
+                            Current = Head==null?null:(Head.Next==null?Head:Current);
                         }
                         Count--;
                         success = true;
@@ -317,11 +327,12 @@ namespace Spider.Data
                     if(last != null)
                     {
                         last.Next = node.Next;
+                        Current = last.Next == null?last : Current;
                     }
                     else
                     {
                         Head = node.Next;
-                        Current = Head;
+                        Current = Head == null?null:(Head.Next ==null ? Head : Current);
                     }
                     Count--;
                     return true;
